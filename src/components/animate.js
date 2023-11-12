@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const AnimateWrapper = ({ children, delay = 400 }) => {
   const [loading, setLoading] = useState(true);
   const opacityClasses = loading ? 'opacity-0' : 'opacity-100';
-  const transitionClasses = "transition-opacity transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)";
+  const transitionClasses = 'transition-opacity transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)';
 
   useEffect(() => {
     const timeout = setTimeout(() => setLoading(false), delay);
