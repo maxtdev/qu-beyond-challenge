@@ -47,24 +47,24 @@ const Main = () => {
 
   const handleNextPageClick = () => {
     if (data.next) {
-      setLoading(true);
+      setIsLoadingContent(true);
 
       doGet(data.next).then((response) => {
         setData(response.data);
         setActualPage(actualPage + 1);
-        setLoading(false);
+        setIsLoadingContent(false);
       });
     }
   }
 
   const handlePrevPageClick = () => {
     if (data.previous) {
-      setLoading(true);
+      setIsLoadingContent(true);
 
       doGet(data.previous).then((response) => {
         setData(response.data);
         setActualPage(actualPage - 1);
-        setLoading(false);
+        setIsLoadingContent(false);
       });
     }
   }
@@ -77,6 +77,7 @@ const Main = () => {
           data={data}
           headers={headers}
           isLoading={isLoadingContent}
+          key={JSON.stringify(data)}
           nextPage={handleNextPageClick}
           page={actualPage}
           prevPage={handlePrevPageClick}
