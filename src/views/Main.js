@@ -74,10 +74,10 @@ const Main = () => {
       <div className="flex content-between flex-col">
         <Title>Qu Beyond Challenge</Title>
         <Table 
-          data={data}
+          count={data.count}
+          results={data.results}
           headers={headers}
           isLoading={isLoadingContent}
-          key={JSON.stringify(data)}
           nextPage={handleNextPageClick}
           page={actualPage}
           prevPage={handlePrevPageClick}

@@ -1,11 +1,11 @@
-import PlusSVG from '../assets/plus.svg';
-import Paginator from './paginator';
 import AnimateWrapper from './animate';
-import { getSanitizedData, getSanitizedHeader } from './utils';
-import { useState } from 'react';
+import Paginator from './paginator';
+import PlusSVG from '../assets/plus.svg';
+import { getSanitizedData, getSanitizedHeader, isSortableHeader } from './utils';
 
 const Table = ({ 
-  data,
+  count,
+  results = [],
   headers = [], 
   isLoading,
   nextPage,
@@ -16,11 +16,8 @@ const Table = ({
 }) => {
   const tableHeaderClasses = "border border-slate-400 text-left text-orange-500 capitalize px-2";
   const tableEvenRowsClasses = "bg-gray-200 hover:bg-gray-300";
-  const count = data.count;
-  const rows = data?.results || [];
-  const [sortedRows, setSortedRows] = useState(rows);
 
-  if (rows.length === 0) return null;
+  if (results.length === 0) return null;
   
   const renderItem = (header, item) => {
     const tableDataClasses = "border border-slate-300 p-2 text-left flex-row";
@@ -46,33 +43,10 @@ const Table = ({
     )
   };
 
-  const handleSortButtonClick = async (header) => {
-    const newRows = sortedRows.sort((a, b) => {
-      let itemA = a?.[header]?.toUpperCase();
-      let itemB = b?.[header]?.toUpperCase();
-      let sortResult = 0;
-
-      itemA = Number(itemA);
-      itemB = Number(itemB);
-      
-      if (itemA < itemB) {
-        sortResult = -1;
-      } else if (itemA > itemB) {
-        sortResult = 1;
-      }
-
-      return sortResult;
-    });
-
-    await setSortedRows(newRows);
+  const handleSortButtonClick = (header) => {
+    // TBD
   };
 
-  const isSortableHeader = (header) => {
-    const headersWithNumbers = []; //['diameter', 'orbital_period', 'rotation_period'];
-
-    return headersWithNumbers.includes(header);
-  };
-  
   return (
     <AnimateWrapper delay={500}>
       <table className={`${isLoading ? 'animate-pulse' : ''}`}>
@@ -88,13 +62,10 @@ const Table = ({
             ))}
           </tr>
         </thead>
-        <tbody>
-          {sortedRows.map((item, index) => (
-            <tr key={item.name} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
-              {headers.map((header) => isLoading ? 
-                <td className="border border-slate-300 p-2 text-left flex-row text-transparent">A</td> : 
-                renderItem(header, item)
-              )}
+        <tbody key={JSON.stringify(results)}>
+          {results.map((item, index) => (
+            <tr key={`${item.name}-${index}`} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
+              {headers.map((header) => renderItem(header, item))}
             </tr>
           ))}
         </tbody>
