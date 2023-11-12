@@ -12,6 +12,7 @@ const otherHeaders = ['created', 'edited', 'url', 'gravity', 'terrain', 'populat
 const Main = () => {
   const containerClasses = "container relative mx-auto flex justify-center items-center min-h-screen";
   const [loading, setLoading] = useState(false);
+  const [actualPage, setActualPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState({});
   const [selectedItem, setSelectedItem] = useState([]);
@@ -43,6 +44,31 @@ const Main = () => {
     );
   };
 
+  const handleNextPageClick = async () => {
+    if (data.next) {
+      await setLoading(true);
+      
+      const response = await doGet(data.next);
+  
+      setData(response.data);
+      setActualPage(actualPage + 1);
+      setLoading(false);
+    }
+  }
+
+  const handlePrevPageClick = async () => {
+    if (data.previous) {
+      await setLoading(true);
+
+      const response = await doGet(data.previous);
+
+      setData(response.data);
+      setActualPage(actualPage - 1);
+
+      setLoading(false);
+    }
+  }
+
   const renderContent = () => {
     return (
       <div className="flex content-between flex-col">
@@ -50,10 +76,10 @@ const Main = () => {
         <Table 
           headers={headers}
           rows={data.results}
-          page={data.page} 
           count={data.count}
-          nextPage={data.next}
-          prevPage={data.prevPage}
+          nextPage={handleNextPageClick}
+          prevPage={handlePrevPageClick}
+          page={actualPage}
           setSelectedItem={setSelectedItem}
           setOpenModal={setOpenModal} 
         />

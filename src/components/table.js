@@ -8,8 +8,8 @@ const Table = ({
   count = 0,
   headers = [], 
   nextPage,
-  page = 0,
   prevPage,
+  page,
   rows = [], 
   setOpenModal,
   setSelectedItem
@@ -95,8 +95,8 @@ const Table = ({
         </tbody>
       </table>
       <Paginator 
-        page={page}
         count={count}
+        page={page}
         nextPage={nextPage}
         prevPage={prevPage}
       />

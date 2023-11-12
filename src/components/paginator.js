@@ -11,9 +11,9 @@ const Paginator = ({
 
   return (
     <div className="flex items-center w-full justify-end">
-      <div>{`Page ${page + 1} of ${count / itemsPerPage}`}</div>
-      <button className={`${prevButtonClasses} p-3 self-end`}>Prev</button>
-      <button className={`${nextButtonClasses} p-3 self-end`}>Next</button>
+      <div>{`Page ${page} of ${count / itemsPerPage}`}</div>
+      <button className={`${prevButtonClasses} p-3 self-end`} onClick={() => prevPage()}>Prev</button>
+      <button className={`${nextButtonClasses} p-3 self-end`} onClick={() => nextPage()}>Next</button>
     </div>
   );
 };
