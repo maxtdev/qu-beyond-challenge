@@ -48,7 +48,7 @@ const Table = ({
   };
 
   return (
-    <AnimateWrapper delay={500}>
+    <AnimateWrapper delay={200}>
       <table className={`${isLoading ? 'animate-pulse' : ''}`}>
         <thead>
           <tr>

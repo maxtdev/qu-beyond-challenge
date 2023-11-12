@@ -37,7 +37,7 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
   }, [open]);
 
   return (
-    <AnimateWrapper onKeyDown={handleKeyDown} delay={500}>
+    <AnimateWrapper enableScaling onKeyDown={handleKeyDown} delay={500}>
       <div className={modalOverlayClasses} onClick={handleOverlayClick} />
       <div className={modalLayerClasses} 
         onClick={handleModalClick} 
