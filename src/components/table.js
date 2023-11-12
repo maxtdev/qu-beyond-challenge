@@ -19,8 +19,6 @@ const Table = ({
   if (rows.length === 0) return null;
   
   const renderItem = (header, item) => {
-    const dates = ['created', 'edited'];
-    const urls = ['films'];
     const tableDataClasses = "border border-slate-300 p-2 text-left flex-row";
     const handleMoreInfoClick = (i) => {
       setOpenModal(true);
@@ -29,13 +27,7 @@ const Table = ({
   
     let content = item[header];
   
-    if (dates.includes(header)) {
-      const newDate = new Date(content);
-  
-      content = newDate.toDateString();
-    } else if (urls.includes(header)){
-      content = "Films TBD"
-    } else if (header === 'more_info') {
+    if (header === 'more_info') {
       content = (
         <button className="w-full h-full flex justify-center" onClick={() => handleMoreInfoClick(item)}>
           <img className="w-5 h-6" src={PlusSVG} alt="Add more" />
