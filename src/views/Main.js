@@ -12,6 +12,7 @@ const otherHeaders = ['created', 'edited', 'url', 'gravity', 'terrain', 'populat
 const Main = () => {
   const containerClasses = "container relative mx-auto flex justify-center items-center min-h-screen";
   const [loading, setLoading] = useState(false);
+  const [isLoadingContent, setIsLoadingContent] = useState(false);
   const [actualPage, setActualPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState({});
@@ -44,28 +45,27 @@ const Main = () => {
     );
   };
 
-  const handleNextPageClick = async () => {
+  const handleNextPageClick = () => {
     if (data.next) {
-      await setLoading(true);
-      
-      const response = await doGet(data.next);
-  
-      setData(response.data);
-      setActualPage(actualPage + 1);
-      setLoading(false);
+      setLoading(true);
+
+      doGet(data.next).then((response) => {
+        setData(response.data);
+        setActualPage(actualPage + 1);
+        setLoading(false);
+      });
     }
   }
 
-  const handlePrevPageClick = async () => {
+  const handlePrevPageClick = () => {
     if (data.previous) {
-      await setLoading(true);
+      setLoading(true);
 
-      const response = await doGet(data.previous);
-
-      setData(response.data);
-      setActualPage(actualPage - 1);
-
-      setLoading(false);
+      doGet(data.previous).then((response) => {
+        setData(response.data);
+        setActualPage(actualPage - 1);
+        setLoading(false);
+      });
     }
   }
 
@@ -74,14 +74,14 @@ const Main = () => {
       <div className="flex content-between flex-col">
         <Title>Qu Beyond Challenge</Title>
         <Table 
+          data={data}
           headers={headers}
-          rows={data.results}
-          count={data.count}
+          isLoading={isLoadingContent}
           nextPage={handleNextPageClick}
-          prevPage={handlePrevPageClick}
           page={actualPage}
-          setSelectedItem={setSelectedItem}
+          prevPage={handlePrevPageClick}
           setOpenModal={setOpenModal} 
+          setSelectedItem={setSelectedItem}
         />
       </div>
     );

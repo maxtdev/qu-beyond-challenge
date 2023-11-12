@@ -5,17 +5,19 @@ import { getSanitizedData, getSanitizedHeader } from './utils';
 import { useState } from 'react';
 
 const Table = ({ 
-  count = 0,
+  data,
   headers = [], 
+  isLoading,
   nextPage,
-  prevPage,
   page,
-  rows = [], 
+  prevPage,
   setOpenModal,
-  setSelectedItem
+  setSelectedItem,
 }) => {
   const tableHeaderClasses = "border border-slate-400 text-left text-orange-500 capitalize px-2";
   const tableEvenRowsClasses = "bg-gray-200 hover:bg-gray-300";
+  const count = data.count;
+  const rows = data?.results || [];
   const [sortedRows, setSortedRows] = useState(rows);
 
   if (rows.length === 0) return null;
@@ -66,14 +68,14 @@ const Table = ({
   };
 
   const isSortableHeader = (header) => {
-    const headersWithNumbers = ['diameter', 'orbital_period', 'rotation_period'];
+    const headersWithNumbers = []; //['diameter', 'orbital_period', 'rotation_period'];
 
     return headersWithNumbers.includes(header);
   };
-
+  
   return (
     <AnimateWrapper delay={500}>
-      <table>
+      <table className={`${isLoading ? 'animate-pulse' : ''}`}>
         <thead>
           <tr>
             {headers.map((header) => (
@@ -89,7 +91,10 @@ const Table = ({
         <tbody>
           {sortedRows.map((item, index) => (
             <tr key={item.name} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
-              {headers.map((header) => renderItem(header, item))}
+              {headers.map((header) => isLoading ? 
+                <td className="border border-slate-300 p-2 text-left flex-row text-transparent">A</td> : 
+                renderItem(header, item)
+              )}
             </tr>
           ))}
         </tbody>

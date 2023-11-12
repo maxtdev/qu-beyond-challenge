@@ -3,8 +3,8 @@ import { getSanitizedData, getSanitizedHeader } from "./utils";
 import AnimateWrapper from "./animate";
 
 const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
-  const modalOverlayClasses = "absolute h-full w-full z-10 top-0 bg-slate-100 opacity-80";
-  const modalLayerClasses = "bg-slate-200 overflow-hidden absolute w-full h-full flex content-center justify-center z-20 rounded-xl transition-opacity ease-in-out delay-100";
+  const modalOverlayClasses = 'absolute h-full w-full z-10 top-0 bg-slate-100 opacity-80';
+  const modalLayerClasses = 'bg-slate-200 overflow-hidden absolute w-full h-full flex content-center justify-center z-20 rounded-xl transition-opacity ease-in-out delay-100';
   const closeButtonRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -19,7 +19,7 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
     setOpenModal(false);
   };
   const handleKeyDown = (event) => {
-    if (event.key === "Tab") {
+    if (event.key === 'Tab') {
       event.preventDefault();
 
       if (document.activeElement === contentRef.current) {
@@ -42,8 +42,8 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
       <div className={modalLayerClasses} 
         onClick={handleModalClick} 
         style={{ 
-          top: 'calc(50% - 200px)', 
-          left: 'calc(50% - 200px)', 
+          top: "calc(50% - 200px)", 
+          left: "calc(50% - 200px)", 
           height: "400px" , 
           width: "400px", 
         }} 
