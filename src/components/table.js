@@ -73,7 +73,6 @@ const Table = ({
 
   return (
     <AnimateWrapper delay={500}>
-      <button onClick={() => handleSortButtonClick('name')}>Click to sort</button>
       <table>
         <thead>
           <tr>
