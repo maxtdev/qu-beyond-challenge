@@ -5,15 +5,22 @@ const Paginator = ({
   page,
   prevPage,
 }) => {
-  const disabledClass = 'disabled:opacity-75';
-  const prevButtonClasses = prevPage !== '' ? disabledClass : '';
-  const nextButtonClasses = nextPage !== '' ? disabledClass : '';
+  const disabledClass = 'text-gray-400';
+  const enableClass = 'text-black font-bold';
 
   return (
     <div className="flex items-center w-full justify-end">
       <div>{`Page ${page} of ${count / itemsPerPage}`}</div>
-      <button className={`${prevButtonClasses} p-3 self-end`} onClick={() => prevPage()}>Prev</button>
-      <button className={`${nextButtonClasses} p-3 self-end`} onClick={() => nextPage()}>Next</button>
+      <button 
+        className={`p-3 self-end ${page > 1 ? enableClass : disabledClass}`} 
+        onClick={() => prevPage()}>
+          Prev
+      </button>
+      <button 
+        className={`p-3 self-end ${page < count / itemsPerPage ? enableClass : disabledClass}`} 
+        onClick={() => nextPage()}>
+          Next
+      </button>
     </div>
   );
 };

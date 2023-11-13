@@ -20,12 +20,11 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
   };
   const handleKeyDown = (event) => {
     if (event.key === 'Tab') {
-      event.preventDefault();
+      const tabIndex = event.target.tabIndex;
 
-      if (document.activeElement === contentRef.current) {
+      if (tabIndex === -1 || tabIndex > 13) {
         closeButtonRef.current.focus();
-      } else if (document.activeElement === closeButtonRef.current) {
-        contentRef.current.focus();
+        event.preventDefault();
       }
     }
   };
@@ -38,40 +37,40 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
 
   return (
     <AnimateWrapper enableScaling onKeyDown={handleKeyDown} delay={500}>
-      <div className={modalOverlayClasses} onClick={handleOverlayClick} />
-      <div className={modalLayerClasses} 
-        onClick={handleModalClick} 
-        style={{ 
-          top: "calc(50% - 200px)", 
-          left: "calc(50% - 200px)", 
-          height: "400px" , 
-          width: "400px", 
-        }} 
-        role="dialog" 
-        aria-modal={open}
-        ref={contentRef}
-        tabIndex={1}
-      >
-        <div className="items-center flex p-4 overflow-hidden">
-          <button 
-            className="absolute top-4 right-4 bg-slate-300 p-2 font-bold focus:border-slate-400"
-            style={{ borderRadius: "50%", fontSize: '10px'}}
-            onClick={handleCloseIconClick}
-            ref={closeButtonRef}
-          >
-            X
-          </button>
-          <div>
+      <div onKeyDown={handleKeyDown}>
+        <div className={modalOverlayClasses} onClick={handleOverlayClick} />
+        <div className={modalLayerClasses} 
+          onClick={handleModalClick} 
+          style={{ 
+            top: "calc(50% - 200px)", 
+            left: "calc(50% - 200px)", 
+            height: "400px" , 
+            width: "400px", 
+          }} 
+          role="dialog" 
+          aria-modal={open}
+          ref={contentRef}
+        >
+          <div className="items-center flex p-4 overflow-hidden">
+            <button 
+              className="absolute top-4 right-4 bg-slate-300 p-2 font-bold focus:border-slate-400"
+              style={{ borderRadius: "50%", fontSize: '10px'}}
+              onClick={handleCloseIconClick}
+              ref={closeButtonRef}
+              tabIndex={1}
+            >
+              X
+            </button>
             <ul>
               {keys.map((key, index) => 
-                <li className="capitalize pb-1" tabIndex={index}>
+                <li className="capitalize pb-1" tabIndex={index + 2}>
                   <span className="text-neutral-900">{`${getSanitizedHeader(key)}: `}</span>
                   <span className="text-neutral-500 pl-2">{`${getSanitizedData(selectedItem[key])}`}</span>
                 </li>
               )}
             </ul>
           </div>
-        </div>
+        </div> 
       </div>
     </AnimateWrapper>
   );
