@@ -1,25 +1,27 @@
 # QU Beyond Challenge 
 
-The folder structure:
+## Folder structure:
 
 src/
-  /assets -> includes files like images or svgs
-  /components -> minimum units that are required to build views
-    utils -> utilities that are common in between small components
-  /views -> more complex components with business rules
-  /utils -> utilities that are common in between all the type of components
+- /assets -> includes files like images or svgs
+- /components -> minimum units that are required to build views
+  - utils -> utilities that are common in between small components
+- /views -> more complex components with business rules
+- /utils -> utilities that are common in between all the type of components
+
+## Tech stack
+
+1. [React](https://react.dev/)
+2. [Tailwindcss](https://tailwindcss.com/)
+3. [Axios](https://axios-http.com/)
+4. [React Testing Library](https://testing-library.com/)
+
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `npm test`
 
