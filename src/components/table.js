@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import AnimateWrapper from './animate';
 import Paginator from './paginator';
 import PlusSVG from '../assets/plus.svg';
-import { getSanitizedData, getSanitizedHeader, isSortableHeader } from './utils';
+import { 
+  getSanitizedData, 
+  getSanitizedHeader, 
+  isSortableHeader, 
+  sortByNumberColumn, 
+  sortByStringColumn,
+} from './utils';
 
 const Table = ({ 
   count,
@@ -16,6 +23,9 @@ const Table = ({
 }) => {
   const tableHeaderClasses = "border border-slate-400 text-left text-orange-500 capitalize px-2";
   const tableEvenRowsClasses = "bg-gray-200 hover:bg-gray-300";
+  const [sortedData, setSortedData] = useState(results);
+  const [isSorting, setIsSorting] = useState(false)
+  const [random, setRandom] = useState(Math.random());
 
   if (results.length === 0) return null;
   
@@ -44,12 +54,24 @@ const Table = ({
   };
 
   const handleSortButtonClick = (header) => {
-    // TBD
+    let newData;
+
+    setIsSorting(true);
+
+    if (header === 'rotation_period') {
+      newData = sortByNumberColumn(sortedData, header);
+    } else if (header === 'name') {
+      newData = sortByStringColumn(sortedData, header);
+    }
+
+    setSortedData(newData);
+    setRandom(Math.random());
+    setIsSorting(false);
   };
 
   return (
     <AnimateWrapper delay={200}>
-      <table className={`${isLoading ? 'animate-pulse' : ''}`}>
+      <table className={`${(isLoading || isSorting) ? 'animate-pulse' : ''}`}>
         <thead>
           <tr>
             {headers.map((header) => (
@@ -62,9 +84,9 @@ const Table = ({
             ))}
           </tr>
         </thead>
-        <tbody key={JSON.stringify(results)}>
-          {results.map((item, index) => (
-            <tr key={`${item.name}-${index}`} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
+        <tbody>
+          {sortedData.map((item, index) => (
+            <tr key={`${item.name}${random}`} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
               {headers.map((header) => renderItem(header, item))}
             </tr>
           ))}
