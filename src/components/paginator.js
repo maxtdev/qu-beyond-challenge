@@ -13,7 +13,7 @@ const Paginator = ({
 
   return (
     <div className="flex items-center w-full justify-end mt-3">
-      <div>{`Page ${page} of ${count / itemsPerPage}`}</div>
+      <div data-testid="paginator-label">{`Page ${page} of ${count / itemsPerPage}`}</div>
       <button 
         className={`${prevButtonClass} ${buttonClasses} `} 
         onClick={() => prevPage()}>
