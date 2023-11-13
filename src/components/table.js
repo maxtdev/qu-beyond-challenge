@@ -72,8 +72,9 @@ const Table = ({
       </table>
       <Paginator 
         count={count}
-        page={page}
+        isTransitioning={isLoading}
         nextPage={nextPage}
+        page={page}
         prevPage={prevPage}
       />
     </AnimateWrapper>

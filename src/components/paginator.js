@@ -1,23 +1,26 @@
 const Paginator = ({
   count,
+  isTransitioning,
   itemsPerPage = 10,
   nextPage,
   page,
   prevPage,
 }) => {
-  const disabledClass = 'text-gray-400';
-  const enableClass = 'text-black font-bold';
+  const disabledClass = 'bg-opacity-25';
+  const buttonClasses = `p-2 self-end bg-indigo-500 rounded ml-3 text-white font-bold ${isTransitioning && 'pointer-events-none bg-opacity-25'}`;
+  const prevButtonClass = page > 1 ? '' : disabledClass;
+  const nextButtonClass = page < count / itemsPerPage ? '' : disabledClass;
 
   return (
-    <div className="flex items-center w-full justify-end">
+    <div className="flex items-center w-full justify-end mt-3">
       <div>{`Page ${page} of ${count / itemsPerPage}`}</div>
       <button 
-        className={`p-3 self-end ${page > 1 ? enableClass : disabledClass}`} 
+        className={`${prevButtonClass} ${buttonClasses} `} 
         onClick={() => prevPage()}>
-          Prev
+          Previous
       </button>
       <button 
-        className={`p-3 self-end ${page < count / itemsPerPage ? enableClass : disabledClass}`} 
+        className={`${nextButtonClass} ${buttonClasses}`} 
         onClick={() => nextPage()}>
           Next
       </button>
