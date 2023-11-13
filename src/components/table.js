@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AnimateWrapper from './animate';
 import Paginator from './paginator';
 import PlusSVG from '../assets/plus.svg';
@@ -26,6 +26,10 @@ const Table = ({
   const [sortedData, setSortedData] = useState(results);
   const [isSorting, setIsSorting] = useState(false)
   const [random, setRandom] = useState(Math.random());
+
+  useEffect(() => {
+    setSortedData(results);
+  }, [results]);
 
   if (results.length === 0) return null;
   
