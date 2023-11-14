@@ -1,14 +1,16 @@
-export const getSanitizedHeader = (header) => {
+import { IData } from '../utils/types';
+
+export const getSanitizedHeader = (header: string) => {
   return header.split('_').join(' ');
 };
 
-export const getSanitizedData = (data) => {
-  if (data === 'unknown') return '???';
+export const getSanitizedData = (header: string) => {
+  if (header === 'unknown') return '???';
 
-  return data;
+  return header;
 };
 
-export const sortByNumberColumn = (data, sortKey) => {
+export const sortByNumberColumn = (data: IData['results'], sortKey: string) => {
   return data.sort((a, b) => {
     let itemA = a?.[sortKey];
     let itemB = b?.[sortKey];
@@ -27,7 +29,7 @@ export const sortByNumberColumn = (data, sortKey) => {
   }) 
 };
 
-export const sortByStringColumn = (data, sortKey) => {
+export const sortByStringColumn = (data: IData['results'], sortKey: string) => {
   return data.sort((a, b) => {
     const itemA = a?.[sortKey];
     const itemB = b?.[sortKey];
@@ -43,7 +45,7 @@ export const sortByStringColumn = (data, sortKey) => {
   });
 };
 
-export const isSortableHeader = (header) => {
+export const isSortableHeader = (header: string) => {
   const headersWithNumbers = ['rotation_period', 'name'];
 
   return headersWithNumbers.includes(header);

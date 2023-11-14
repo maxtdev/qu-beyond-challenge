@@ -3,32 +3,9 @@ import { createPortal } from 'react-dom';
 import LoadingSVG from '../assets/oval.svg';
 import { Modal, Table, Title } from '../components';
 import { doGet } from '../utils/service';
-
+import { IPlanet, IData } from '../utils/types';
 const headers = ['name', 'climate', 'diameter', 'orbital_period', 'rotation_period', 'surface_water', 'more_info'];
 const otherHeaders = ['created', 'edited', 'url', 'gravity', 'terrain', 'population'];
-
-export interface IPlanet {
-  name: string;
-  climate: string;
-  diameter: string;
-  orbital_period: string;
-  rotation_period: string;
-  surface_water: string;
-  created?: string;
-  edited?: string;
-  url?: string;
-  gravity?: string;
-  terrain?: string;
-  population?: string;
-  more_info?: string;
-}
-
-interface IData {
-  count: string;
-  next: string;
-  previous: string;
-  results: IPlanet[];
-}
 
 interface IMainProps {
   className?: string;
