@@ -9,7 +9,7 @@ import {
   sortByNumberColumn, 
   sortByStringColumn,
 } from './utils';
-import { IPlanet } from '../views/Main';
+import { IPlanet } from '../utils/types';
 
 interface ITableProps {
   count: number;

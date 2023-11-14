@@ -5,7 +5,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const doGet = (url: string) => {
+const doGet = (url?: string): Promise<any> => {
   const URL = url || baseURL;
   
   return axios.get(URL, {

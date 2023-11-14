@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { getSanitizedData, getSanitizedHeader } from "./utils";
 import AnimateWrapper from "./animate";
-import { IPlanet } from "../views/Main";
+import { IPlanet } from "../utils/types";
 
 interface IModalProps {
   className?: string;
