@@ -1,8 +1,18 @@
-import { useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { getSanitizedData, getSanitizedHeader } from "./utils";
 import AnimateWrapper from "./animate";
+import { IPlanet } from "../views/Main";
 
-const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
+interface IModalProps {
+  className?: string;
+  setOpenModal: (openModal: boolean) => void;
+  setSelectedItem: Dispatch<SetStateAction<IPlanet | Object>>;
+  selectedItem: IPlanet;
+  open: boolean;
+  keys: string[];
+};
+
+const Modal: React.FC<IModalProps> = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
   const modalOverlayClasses = 'absolute h-full w-full z-10 top-0 bg-slate-100 opacity-80';
   const modalLayerClasses = 'bg-slate-200 overflow-hidden absolute w-full h-full flex content-center justify-center z-20 rounded-xl transition-opacity ease-in-out delay-100';
   const closeButtonRef = useRef(null);
@@ -36,7 +46,7 @@ const Modal = ({ setOpenModal, setSelectedItem, selectedItem, open, keys }) => {
   }, [open]);
 
   return (
-    <AnimateWrapper enableScaling onKeyDown={handleKeyDown} delay={500}>
+    <AnimateWrapper onKeyDown={handleKeyDown} delay={500}>
       <div onKeyDown={handleKeyDown}>
         <div className={modalOverlayClasses} onClick={handleOverlayClick} />
         <div className={modalLayerClasses} 

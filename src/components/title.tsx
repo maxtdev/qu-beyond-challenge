@@ -1,6 +1,10 @@
 import AnimateWrapper from './animate';
 
-const Title = ({ children }) => {
+interface ITitleProps {
+  children: React.ReactNode
+}
+
+const Title: React.FC<ITitleProps> = ({ children }) => {
   const titleClasses = "transition-opacity delay-500 text-xl mb-6 text-red-500 font-bold";
 
   return (

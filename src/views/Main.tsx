@@ -1,22 +1,54 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import LoadingSVG from '../assets/oval.svg';
-import Modal from '../components/modal';
-import Table from '../components/table';
-import Title from '../components/title';
+import { Modal, Table, Title } from '../components';
 import { doGet } from '../utils/service';
 
 const headers = ['name', 'climate', 'diameter', 'orbital_period', 'rotation_period', 'surface_water', 'more_info'];
 const otherHeaders = ['created', 'edited', 'url', 'gravity', 'terrain', 'population'];
 
-const Main = () => {
+export interface IPlanet {
+  name: string;
+  climate: string;
+  diameter: string;
+  orbital_period: string;
+  rotation_period: string;
+  surface_water: string;
+  created?: string;
+  edited?: string;
+  url?: string;
+  gravity?: string;
+  terrain?: string;
+  population?: string;
+  more_info?: string;
+}
+
+interface IData {
+  count: string;
+  next: string;
+  previous: string;
+  results: IPlanet[];
+}
+
+interface IMainProps {
+  className?: string;
+}
+
+const Main: React.FC<IMainProps> = () => {
   const containerClasses = "container relative mx-auto flex justify-center items-center min-h-screen";
+  const defaultData = {
+    count: null,
+    next: null,
+    previous: null,
+    results: [],
+  };
+
   const [loading, setLoading] = useState(false);
   const [isLoadingContent, setIsLoadingContent] = useState(false);
   const [actualPage, setActualPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
-  const [data, setData] = useState({});
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [data, setData] = useState<IData>(defaultData);
+  const [selectedItem, setSelectedItem] = useState<IPlanet>(null);
   
   useEffect(() => {
     const apiCall = async () => {
@@ -74,7 +106,7 @@ const Main = () => {
       <div className="flex content-between flex-col">
         <Title>Qu Beyond Challenge</Title>
         <Table 
-          count={data.count}
+          count={Number(data.count)}
           results={data.results}
           headers={headers}
           isLoading={isLoadingContent}

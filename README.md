@@ -13,9 +13,9 @@ src/
 
 1. [React](https://react.dev/)
 2. [Tailwindcss](https://tailwindcss.com/)
-3. [Axios](https://axios-http.com/)
-4. [React Testing Library](https://testing-library.com/)
-
+3. [Typescript](https://www.typescriptlang.org/)
+4. [Axios](https://axios-http.com/)
+5. [React Testing Library](https://testing-library.com/)
 
 ## Available Scripts
 

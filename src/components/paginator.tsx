@@ -1,4 +1,14 @@
-const Paginator = ({
+interface IPaginatorProps {
+  count: number,
+  className?: string;
+  isTransitioning?: boolean;
+  itemsPerPage?: number;
+  nextPage: () => void;
+  page: number;
+  prevPage: () => void;
+};
+
+const Paginator: React.FC<IPaginatorProps> = ({
   count,
   isTransitioning,
   itemsPerPage = 10,

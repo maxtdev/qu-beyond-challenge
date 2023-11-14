@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import AnimateWrapper from './animate';
 import Paginator from './paginator';
 import PlusSVG from '../assets/plus.svg';
@@ -9,8 +9,22 @@ import {
   sortByNumberColumn, 
   sortByStringColumn,
 } from './utils';
+import { IPlanet } from '../views/Main';
 
-const Table = ({ 
+interface ITableProps {
+  count: number;
+  className?: string;
+  headers: string[];
+  isLoading: boolean;
+  nextPage: () => void; 
+  page: number;
+  prevPage: () => void;
+  results: IPlanet[];
+  setOpenModal: Dispatch<SetStateAction<Boolean>>;
+  setSelectedItem: Dispatch<SetStateAction<IPlanet>>;
+}
+
+const Table: React.FC<ITableProps> = ({ 
   count,
   results = [],
   headers = [], 
@@ -75,34 +89,36 @@ const Table = ({
 
   return (
     <AnimateWrapper delay={200}>
-      <table className={`${(isLoading || isSorting) ? 'animate-pulse' : ''}`}>
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th key={`${header}`} className={`${tableHeaderClasses}`}>
-                {getSanitizedHeader(header)}
-                {isSortableHeader(header) && (
-                  <button className="pl-5" onClick={() => handleSortButtonClick(header)}>*</button>
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((item, index) => (
-            <tr key={`${item.name}${random}`} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
-              {headers.map((header) => renderItem(header, item))}
+      <>
+        <table className={`${(isLoading || isSorting) ? 'animate-pulse' : ''}`}>
+          <thead>
+            <tr>
+              {headers.map((header) => (
+                <th key={`${header}`} className={`${tableHeaderClasses}`}>
+                  {getSanitizedHeader(header)}
+                  {isSortableHeader(header) && (
+                    <button className="pl-5" onClick={() => handleSortButtonClick(header)}>*</button>
+                  )}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Paginator 
-        count={count}
-        isTransitioning={isLoading}
-        nextPage={nextPage}
-        page={page}
-        prevPage={prevPage}
-      />
+          </thead>
+          <tbody>
+            {sortedData.map((item, index) => (
+              <tr key={`${item.name}${random}`} className={index % 2 === 0 ? tableEvenRowsClasses : 'hover:bg-gray-300'}>
+                {headers.map((header) => renderItem(header, item))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Paginator 
+          count={count}
+          isTransitioning={isLoading}
+          nextPage={nextPage}
+          page={page}
+          prevPage={prevPage}
+        />
+      </>
     </AnimateWrapper>
   ); 
 };
